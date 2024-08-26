@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "gkynXASPpSfr6akS6wWb/Qm83YH81kl0Ybp5u0hElE0=",
+  "Source": "mk-ecommerce-api",
+  "BasePath": "_content/mk-ecommerce-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
