@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class AuthService{
-    private static readonly List<User> Users = new List<User>{
-        new User { Username = "admin", Password = "password"}
+    private static readonly List<Admin> Admins = new List<Admin>{
+        new Admin { Username = "admin", Password = "password"}
     };
 
     public bool Authenticate(string username, string password){
-        return Users.Any(u => u.Username == username && u.Password == password);
+        return Admins.Any(u => u.Username == username && u.Password == password);
     }
 }

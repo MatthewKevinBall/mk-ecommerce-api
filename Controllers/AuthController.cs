@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] User user)
+    public IActionResult Login([FromBody] Admin user)
     {
         _logger.LogDebug("Attempting to log in with username: {Username}", user.Username);
 

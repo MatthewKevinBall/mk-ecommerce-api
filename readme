@@ -1,0 +1,6 @@
+docker exec -it mysql-container mysql -u root -p
+
+dotnet run
+
+dotnet ef migrations add *nameofmigration*
+dotnet ef database update
