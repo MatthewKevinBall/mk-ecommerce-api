@@ -4,3 +4,9 @@ dotnet run
 
 dotnet ef migrations add *nameofmigration*
 dotnet ef database update
+
+dotnet ef database update 0
+ dotnet ef migrations remove
+//Clear Cachce
+dotnet nuget locals all --clear
+rm -rf bin obj

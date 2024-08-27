@@ -5,13 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSingleton<AuthService>();
+builder.Services.AddScoped<AuthService>();
+builder.Logging.AddConsole();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
         new MySqlServerVersion(new Version(9, 0, 1)))); // Adjust the version as needed
-
-
+    
 // Configure CORS
 builder.Services.AddCors(options =>
 {
@@ -28,7 +28,6 @@ var app = builder.Build();
 // Use CORS
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

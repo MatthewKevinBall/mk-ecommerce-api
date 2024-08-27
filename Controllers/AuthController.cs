@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,18 +15,14 @@ public class AuthController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("login")]
-    public IActionResult Login([FromBody] Admin user)
+     [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginRequest user)
     {
-        _logger.LogDebug("Attempting to log in with username: {Username}", user.Username);
-
-        if (_authService.Authenticate(user.Username, user.Password))
+        if (_authService.Authenticate(user.Email, user.Password))
         {
-            _logger.LogInformation("Login successful for username: {Username}", user.Username);
+
             return Ok("Login successful");
         }
-
-        _logger.LogWarning("Login failed for username: {Username}", user.Username);
         return Unauthorized("Invalid credentials");
     }
 }
