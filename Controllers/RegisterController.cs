@@ -1,15 +1,17 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RegisterController : ControllerBase{
+public class RegisterController : ControllerBase
+{
     private readonly ApplicationDbContext _context;
     private readonly ILogger<RegisterController> _logger;
 
-    public RegisterController(ApplicationDbContext context,  ILogger<RegisterController> logger){
+    public RegisterController(ApplicationDbContext context, ILogger<RegisterController> logger)
+    {
         _context = context;
         _logger = logger;
 
@@ -34,12 +36,14 @@ public class RegisterController : ControllerBase{
         return Ok("Success!!");
     }
 
-    private async Task addAdminToBackEnd(Admin newAdmin){
+    private async Task addAdminToBackEnd(Admin newAdmin)
+    {
         _context.Admins.Add(newAdmin);
         await _context.SaveChangesAsync();
     }
 
-    private Admin createNewAdminObjectFromLoginRequest(LoginRequest user){
+    private Admin createNewAdminObjectFromLoginRequest(LoginRequest user)
+    {
         Admin newAdmin = new Admin
         {
             Email = user.Email,

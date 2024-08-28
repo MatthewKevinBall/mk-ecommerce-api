@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class Admin : UserBase{
-   
+public class Admin : UserBase
+{
+
 }

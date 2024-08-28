@@ -8,7 +8,7 @@ public abstract class UserBase
     public int Id { get; set; } // Primary key
 
     [EmailAddress]
-    public string? Email { get; set; }
+    public required string Email { get; set; }
     public string? PasswordHash { get; set; }
     public string? PasswordSalt { get; set; }
     public string? FirstName { get; set; }
@@ -17,7 +17,7 @@ public abstract class UserBase
     [Phone]
     public string? PhoneNumber { get; set; }
 
-   public void SetPasswordHash(string password)
+    public void SetPasswordHash(string password)
     {
         using (var hmac = new HMACSHA512())
         {
@@ -26,13 +26,13 @@ public abstract class UserBase
         }
     }
 
-   public bool VerifyPassword(string password)
+    public bool VerifyPassword(string password)
     {
         using (var hmac = new HMACSHA512(Convert.FromBase64String(PasswordSalt)))
         {
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             var computedHashBase64 = Convert.ToBase64String(computedHash);
-            
+
             // Use a constant-time comparison
             return CryptographicOperations.FixedTimeEquals(
                 Convert.FromBase64String(PasswordHash),

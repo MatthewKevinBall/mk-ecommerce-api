@@ -10,3 +10,6 @@ dotnet ef database update 0
 //Clear Cachce
 dotnet nuget locals all --clear
 rm -rf bin obj
+
+//Beautify 
+dotnet format

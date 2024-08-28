@@ -9,9 +9,9 @@ builder.Services.AddScoped<AuthService>();
 builder.Logging.AddConsole();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(9, 0, 1)))); // Adjust the version as needed
-    
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {
