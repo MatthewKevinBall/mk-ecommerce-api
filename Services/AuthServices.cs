@@ -18,24 +18,12 @@ public class AuthService
 
     public UserResponse Authenticate(string email, string password)
     {
-        var user = _context.Admins.SingleOrDefault(u => u.Email == email);
+        var user = _context.Users.SingleOrDefault(u => u.Email == email);
         if (user == null || !user.VerifyPassword(password))
         {
             return null;
         }
 
-        return UserToUserResponse(user);
-    }
-
-
-    private UserResponse UserToUserResponse(UserBase user)
-    {
-        return new UserResponse
-        {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            Id = user.Id,
-        };
+        return ConversionHelper.UserToUserResponse(user);
     }
 }

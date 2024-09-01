@@ -2,13 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
-public abstract class UserBase
+public class User
 {
     [Key]
-    public int Id { get; set; } // Primary key
+    public int Id { get; set; }
 
     [EmailAddress]
     public required string Email { get; set; }
+
     public string? PasswordHash { get; set; }
     public string? PasswordSalt { get; set; }
     public string? FirstName { get; set; }
@@ -16,13 +17,26 @@ public abstract class UserBase
 
     [Phone]
     public string? PhoneNumber { get; set; }
+    
+    public bool IsSuperAdmin { get; set; } = true;
 
+    public void PerformAdminTask()
+    {
+        if (IsSuperAdmin)
+        {
+            // Perform task
+        }
+        else
+        {
+            throw new UnauthorizedAccessException("Not an admin.");
+        }
+    }
     public void SetPasswordHash(string password)
     {
         using (var hmac = new HMACSHA512())
         {
-            PasswordSalt = Convert.ToBase64String(hmac.Key); // Store the salt
-            PasswordHash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(password))); // Store the hashed password
+            PasswordSalt = Convert.ToBase64String(hmac.Key);
+            PasswordHash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(password)));
         }
     }
 
@@ -33,7 +47,6 @@ public abstract class UserBase
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             var computedHashBase64 = Convert.ToBase64String(computedHash);
 
-            // Use a constant-time comparison
             return CryptographicOperations.FixedTimeEquals(
                 Convert.FromBase64String(PasswordHash),
                 Convert.FromBase64String(computedHashBase64));

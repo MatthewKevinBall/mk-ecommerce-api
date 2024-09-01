@@ -16,23 +16,23 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest user)
+    public IActionResult Login([FromBody] LoginRequestDto user)
     {
         UserResponse userResponse = _authService.Authenticate(user.Email, user.Password);
         if (userResponse != null)
         {
             var response = new RequestResponse
             {
-                name = "Success", // Property names should be in PascalCase
-                result = userResponse.ToJson() // Set `Result` to the actual response object
+                name = "Success", 
+                result = userResponse.ToJson() // 
             };
             return Ok(response);
         }
         var failure = new RequestResponse
-        {
-            name = "Failure", // Property names should be in PascalCase
-            result = "Invalid Credentials" // Set `Result` to the actual response object
-        };
+            {
+                name = "Failure", 
+                result = "Invalid Credentials" 
+            };
 
         return Unauthorized(failure);
     }

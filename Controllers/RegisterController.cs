@@ -17,8 +17,8 @@ public class RegisterController : ControllerBase
 
     }
 
-    [HttpPost("add/admin")]
-    public async Task<IActionResult> AddAdmin([FromBody] LoginRequest user)
+    [HttpPost("add/user")]
+    public async Task<IActionResult> AddAdmin([FromBody] LoginRequestDto user)
     {
         if (user == null)
         {
@@ -30,21 +30,21 @@ public class RegisterController : ControllerBase
             return BadRequest("Email already exisits");
 
         }
-        Admin newAdmin = createNewAdminObjectFromLoginRequest(user);
+        User newAdmin = createNewAdminObjectFromLoginRequest(user);
         await addAdminToBackEnd(newAdmin);
 
         return Ok("Success!!");
     }
 
-    private async Task addAdminToBackEnd(Admin newAdmin)
+    private async Task addAdminToBackEnd(User newUser)
     {
-        _context.Admins.Add(newAdmin);
+        _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
     }
 
-    private Admin createNewAdminObjectFromLoginRequest(LoginRequest user)
+    private User createNewAdminObjectFromLoginRequest(LoginRequestDto user)
     {
-        Admin newAdmin = new Admin
+        User newAdmin = new User
         {
             Email = user.Email,
         };
@@ -54,7 +54,7 @@ public class RegisterController : ControllerBase
 
     private async Task<bool> IsEmailUniqueAsync(string email)
     {
-        var existingAdmin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == email);
+        var existingAdmin = await _context.Users.FirstOrDefaultAsync(a => a.Email == email);
         return existingAdmin == null;
     }
 }

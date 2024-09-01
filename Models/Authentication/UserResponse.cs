@@ -7,7 +7,9 @@ public class UserResponse
     public string? LastName { get; set; }
     public int Id { get; set; }
 
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
+
+    public required string UserType {get; set;} = "User";
 
     public string ToJson()
     {
